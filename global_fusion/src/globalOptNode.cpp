@@ -107,11 +107,12 @@ void vio_callback(const nav_msgs::Odometry::ConstPtr &pose_msg)
             double altitude = GPS_msg->altitude;
             //int numSats = GPS_msg->status.service;
             double pos_accuracy = GPS_msg->position_covariance[0];
-            if(pos_accuracy <= 0)
+            if(pos_accuracy <= 0) {
                 pos_accuracy = 1;
             //printf("receive covariance %lf \n", pos_accuracy);
             //if(GPS_msg->status.status > 8)
                 globalEstimator.inputGPS(t, latitude, longitude, altitude, pos_accuracy);
+            }
             gpsQueue.pop();
             break;
         }

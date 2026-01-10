@@ -14,6 +14,11 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(Ceres REQUIRED)
 
+find_package(OpenMP REQUIRED)
+if (OpenMP_CXX_FOUND)
+  message(STATUS "OpenMP found, linking to <target_name>")
+endif()
+
 add_subdirectory(./ThirdParty/GeographicLib/)
 
 include_directories(
@@ -30,4 +35,4 @@ add_executable(global_fusion_node
 	src/globalOptNode.cpp
 	src/globalOpt.cpp)
 
-target_link_libraries(global_fusion_node ${catkin_LIBRARIES} ${CERES_LIBRARIES} libGeographiccc) 
+target_link_libraries(global_fusion_node ${catkin_LIBRARIES} ${CERES_LIBRARIES} libGeographiccc OpenMP::OpenMP_CXX) 
