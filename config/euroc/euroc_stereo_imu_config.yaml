@@ -58,4 +58,4 @@ td: -0.0007835763358029035
 
 load_previous_pose_graph: 0
 pose_graph_save_path: "~/output/pose_graph/"
-save_image: 1
+save_image: 0
