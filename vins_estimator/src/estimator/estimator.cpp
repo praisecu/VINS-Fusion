@@ -547,9 +547,8 @@ void Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<doubl
         if (! MULTIPLE_THREAD)
         {
             featureTracker.removeOutliers(removeIndex);
-            // predictPtsInNextFrame();
+            predictPtsInNextFrame();
         }
-        predictPtsInNextFrame(); // move to outside
             
         ROS_DEBUG("solver costs: %fms", t_solve.toc());
 
