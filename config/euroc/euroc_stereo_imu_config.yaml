@@ -36,12 +36,12 @@ body_T_cam1: !!opencv-matrix
 
 multiple_thread: 1
 
-max_cnt: 150
+max_cnt: 100
 min_dist: 30
 freq: 0
 F_threshold: 1.0
 show_track: 0
-flow_back: 1
+flow_back: 0
 
 max_solver_time: 0.04
 max_num_iterations: 8
