@@ -327,7 +327,7 @@ void Estimator::processMeasurements()
             pubOdometry(*this, header);
             pubKeyPoses(*this, header);
             pubCameraPose(*this, header);
-            pubPointCloud(*this, header);
+            // pubPointCloud(*this, header);
             pubKeyframe(*this);
             pubTF(*this, header);
             mProcess.unlock();
@@ -547,8 +547,9 @@ void Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<doubl
         if (! MULTIPLE_THREAD)
         {
             featureTracker.removeOutliers(removeIndex);
-            predictPtsInNextFrame();
+            // predictPtsInNextFrame();
         }
+        predictPtsInNextFrame(); // move to outside
             
         ROS_DEBUG("solver costs: %fms", t_solve.toc());
 
