@@ -336,7 +336,7 @@ void Estimator::processMeasurements()
         if (! MULTIPLE_THREAD)
             break;
 
-        std::chrono::milliseconds dura(2);
+        std::chrono::milliseconds dura(1);
         std::this_thread::sleep_for(dura);
     }
 }
@@ -547,9 +547,8 @@ void Estimator::processImage(const map<int, vector<pair<int, Eigen::Matrix<doubl
         if (! MULTIPLE_THREAD)
         {
             featureTracker.removeOutliers(removeIndex);
-            // predictPtsInNextFrame();
+            predictPtsInNextFrame();
         }
-        predictPtsInNextFrame();
             
         ROS_DEBUG("solver costs: %fms", t_solve.toc());
 
