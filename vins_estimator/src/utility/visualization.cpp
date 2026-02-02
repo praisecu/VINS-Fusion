@@ -34,9 +34,9 @@ size_t pub_counter = 0;
 void registerPub(ros::NodeHandle &n)
 {
     pub_latest_odometry = n.advertise<nav_msgs::Odometry>("imu_propagate", 1000);
-    pub_path = n.advertise<nav_msgs::Path>("path", 1000);
-    pub_odometry = n.advertise<nav_msgs::Odometry>("odometry", 1000);
-    pub_odometry_mavros = n.advertise<geometry_msgs::PoseStamped>("/mavros/vision_pose/pose", 1000);
+    pub_path = n.advertise<nav_msgs::Path>("path", 5);
+    pub_odometry = n.advertise<nav_msgs::Odometry>("odometry", 5);
+    pub_odometry_mavros = n.advertise<geometry_msgs::PoseStamped>("/mavros/vision_pose/pose", 5);
     // pub_point_cloud = n.advertise<sensor_msgs::PointCloud>("point_cloud", 1000);
     pub_point_cloud = n.advertise<sensor_msgs::PointCloud2>("point_cloud", 1000);
     pub_margin_cloud = n.advertise<sensor_msgs::PointCloud>("margin_cloud", 1000);
