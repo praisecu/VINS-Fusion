@@ -82,16 +82,22 @@ void sync_process()
             {
                 double time0 = img0_buf.front()->header.stamp.toSec();
                 double time1 = img1_buf.front()->header.stamp.toSec();
-                // 0.003s sync tolerance
-                if(time0 < time1 - 0.003)
+                double time_diff = abs(time0 - time1) * 1000; // in milliseconds
+                
+                // Print timing info
+                printf("Stereo sync: time_diff = %.2f ms (time0=%.6f, time1=%.6f)\n", 
+                       time_diff, time0, time1);
+                
+                // 0.003s sync tolerance (3ms) - INCREASE THIS
+                if(time0 < time1 - 0.015)  // Changed from 0.003 to 0.015 (15ms)
                 {
                     img0_buf.pop();
-                    printf("throw img0\n");
+                    printf("DROPPED img0: diff = %.2f ms\n", (time1 - time0) * 1000);
                 }
-                else if(time0 > time1 + 0.003)
+                else if(time0 > time1 + 0.015)  // Changed from 0.003 to 0.015 (15ms)
                 {
                     img1_buf.pop();
-                    printf("throw img1\n");
+                    printf("DROPPED img1: diff = %.2f ms\n", (time0 - time1) * 1000);
                 }
                 else
                 {
@@ -101,7 +107,7 @@ void sync_process()
                     img0_buf.pop();
                     image1 = getImageFromMsg(img1_buf.front());
                     img1_buf.pop();
-                    //printf("find img0 and img1\n");
+                    printf("PROCESSING frame pair: diff = %.2f ms\n", time_diff);
                 }
             }
             m_buf.unlock();
