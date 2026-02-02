@@ -82,22 +82,17 @@ void sync_process()
             {
                 double time0 = img0_buf.front()->header.stamp.toSec();
                 double time1 = img1_buf.front()->header.stamp.toSec();
-                double time_diff = abs(time0 - time1) * 1000; // in milliseconds
-                
-                // Print timing info
-                printf("Stereo sync: time_diff = %.2f ms (time0=%.6f, time1=%.6f)\n", 
-                       time_diff, time0, time1);
-                
-                // 0.003s sync tolerance (3ms) - INCREASE THIS
-                if(time0 < time1 - 0.015)  // Changed from 0.003 to 0.015 (15ms)
+                // 0.003s sync tolerance
+                // EDIT: change to 0.050 -> dependent on hardware
+                if(time0 < time1 - 0.050)
                 {
                     img0_buf.pop();
-                    printf("DROPPED img0: diff = %.2f ms\n", (time1 - time0) * 1000);
+                    printf("throw img0\n");
                 }
-                else if(time0 > time1 + 0.015)  // Changed from 0.003 to 0.015 (15ms)
+                else if(time0 > time1 + 0.050)
                 {
                     img1_buf.pop();
-                    printf("DROPPED img1: diff = %.2f ms\n", (time0 - time1) * 1000);
+                    printf("throw img1\n");
                 }
                 else
                 {
@@ -107,7 +102,7 @@ void sync_process()
                     img0_buf.pop();
                     image1 = getImageFromMsg(img1_buf.front());
                     img1_buf.pop();
-                    printf("PROCESSING frame pair: diff = %.2f ms\n", time_diff);
+                    //printf("find img0 and img1\n");
                 }
             }
             m_buf.unlock();
@@ -132,7 +127,7 @@ void sync_process()
                 estimator.inputImage(time, image);
         }
 
-        std::chrono::milliseconds dura(2);
+        std::chrono::milliseconds dura(1);
         std::this_thread::sleep_for(dura);
     }
 }
